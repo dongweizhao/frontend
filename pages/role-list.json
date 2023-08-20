@@ -1,0 +1,339 @@
+{
+  "type": "page",
+  "title": "角色列表",
+  "remark": null,
+  "name": "roleList",
+  "body": [
+    {
+      "type": "crud",
+      "name": "roleList",
+      "api": {
+        "method": "get",
+        "url": "/dp-manager/system/role/page",
+        "data": {
+          "current": "${page}",
+          "pageSize": "${perPage}",
+          "name": "${name}",
+          "status": "${status}"
+        }
+      },
+      "filter": {
+        "title": "",
+        "mode": "inline",
+        "wrapWithPanel": false,
+        "submitText": "",
+        "controls": [
+          {
+            "type": "text",
+            "name": "name",
+            "placeholder": "角色名称",
+            "label": "角色名称",
+            "size": "sm",
+            "clearable": true
+          },
+          {
+            "type": "select",
+            "name": "status",
+            "placeholder": "状态",
+            "label": "状态",
+            "size": "sm",
+            "options": [
+              {
+                "label": "正常",
+                "value": "0"
+              },
+              {
+                "label": "禁用",
+                "value": "1"
+              }
+            ],
+            "clearable": true
+          },
+          {
+            "type": "submit",
+            "label": "搜索",
+            "size": "md",
+            "className": "btn-primary"
+          }
+        ],
+        "className": "m-b-sm"
+      },
+      "headerToolbar": [
+        {
+          "type": "button",
+          "actionType": "dialog",
+          "icon": "fa fa-plus",
+          "label": "新增",
+          "target": "roleList",
+          "primary": true,
+          "closeOnOutside": false,
+          "dialog": {
+            "title": "创建角色",
+            "size": "md",
+            "showErrorMsg": false,
+            "body": {
+              "type": "form",
+              "api": "post:/dp-manager/system/role/create",
+              "body": [
+                {
+                  "type": "group",
+                  "body": [
+                    {
+                      "type": "input-text",
+                      "name": "name",
+                      "label": "角色名称",
+                      "required": true
+                    },
+                    {
+                      "type": "input-text",
+                      "name": "code",
+                      "label": "角色编码",
+                      "required": true
+                    }
+                  ]
+                },
+                {
+                  "type": "group",
+                  "body": [
+                    {
+                      "name": "status",
+                      "label": "状态",
+                      "type": "select",
+                      "required": true,
+                      "options": [
+                        {
+                          "label": "开启",
+                          "value": "0"
+                        },
+                        {
+                          "label": "关闭",
+                          "value": "1"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "input-number",
+                      "name": "sort",
+                      "label": "顺序",
+                      "min": 0
+                    }
+                  ]
+                },
+                {
+                  "name": "remark",
+                  "label": "备注",
+                  "type": "textarea"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "columns": [
+        {
+          "name": "id",
+          "label": "角色ID",
+          "sortable": true
+        },
+        {
+          "name": "code",
+          "label": "角色编号",
+          "sortable": true
+        },
+        {
+          "name": "name",
+          "label": "角色名称",
+          "sortable": true
+        },
+        {
+          "name": "type",
+          "label": "类型",
+          "type": "mapping",
+          "map": {
+            "1": "<span class='label label-info'>内置角色</span>",
+            "2": "<span class='label label-info'>自定义角色</span>"
+          }
+        },
+        {
+          "name": "sort",
+          "label": "顺序",
+          "sortable": true
+        },
+        {
+          "name": "createTime",
+          "label": "创建时间"
+        },
+        {
+          "name": "updateTime",
+          "label": "更新时间"
+        },
+        {
+          "name": "status",
+          "label": "状态",
+          "type": "mapping",
+          "map": {
+            "0": "<span class='label label-success'>正常</span>",
+            "1": "<span class='label label-danger'>禁用</span>"
+          }
+        },
+        {
+          "type": "operation",
+          "label": "操作",
+          "width": "",
+          "buttons": [
+            {
+              "type": "button-group",
+              "buttons": [
+                {
+                  "label": "修改",
+                  "type": "button",
+                  "level": "info",
+                  "actionType": "dialog",
+                  "dialog": {
+                    "size": "md",
+                    "title": "角色修改",
+                    "body": {
+                      "type": "form",
+                      "name": "user-edit-form",
+                      "api": "put:/dp-manager/system/role/update",
+                      "body": [
+                        {
+                          "type": "group",
+                          "body": [
+                            {
+                              "type": "hidden",
+                              "name": "id"
+                            },
+                            {
+                              "type": "input-text",
+                              "name": "code",
+                              "label": "角色编号",
+                              "disabled": true
+                            },
+                            {
+                              "type": "input-text",
+                              "name": "name",
+                              "label": "角色名称"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "group",
+                          "body": [
+                            {
+                              "name": "status",
+                              "label": "状态",
+                              "type": "select",
+                              "required": true,
+                              "options": [
+                                {
+                                  "label": "开启",
+                                  "value": "0"
+                                },
+                                {
+                                  "label": "关闭",
+                                  "value": "1"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "input-number",
+                              "name": "sort",
+                              "min": 0,
+                              "label": "顺序"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "remark",
+                          "label": "备注",
+                          "type": "textarea"
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "type": "button",
+                  "label": "授权",
+                  "level": "info",
+                  "actionType": "dialog",
+                  "dialog": {
+                    "title": "角色授权",
+                    "body": {
+                      "type": "form",
+                      "name": "role-set-form",
+                      "initApi": {
+                        "method": "get",
+                        "url": "/dp-manager/system/permission/list-role-resources?roleId=${id}",
+                        "responseData": {
+                          "menuIds": "${ids}"
+                        }
+                      },
+                      "api": {
+                        "method": "post",
+                        "url": "/dp-manager/system/permission/assign-role-menu",
+                        "data": {
+                          "roleId": "${roleId}",
+                          "menuIds": "${menuIds|split|arrayParseNumber}"
+                        }
+                      },
+                      "body": [
+                        {
+                          "type": "hidden",
+                          "name": "roleId",
+                          "value": "${id}"
+                        },
+                        {
+                          "type": "input-text",
+                          "name": "name",
+                          "label": "角色名称"
+                        },
+                        {
+                          "name": "menuIds",
+                          "label": "菜单列表",
+                          "required": true,
+                          "type": "input-tree",
+                          "searchable": true,
+                          "multiple": true,
+                          "cascade": true,
+                          "iconField": "icon",
+                          "initiallyOpen": false,
+                          "source": {
+                            "url": "/dp-manager/system/permission/selectMenuTree",
+                            "responseData": {
+                              "options": "${items}"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "type": "button",
+                  "label": "删除",
+                  "level": "danger",
+                  "actionType": "ajax",
+                  "confirmText": "您确认要删除?",
+                  "api": "delete:/dp-manager/system/role/delete/?id=${id}"
+                }
+              ]
+            }
+          ],
+          "placeholder": "-",
+          "fixed": "right"
+        }
+      ],
+      "affixHeader": true,
+      "columnsTogglable": "auto",
+      "placeholder": "暂无数据",
+      "tableClassName": "table-db table-striped",
+      "headerClassName": "crud-table-header",
+      "footerClassName": "crud-table-footer",
+      "toolbarClassName": "crud-table-toolbar",
+      "combineNum": 0,
+      "bodyClassName": "panel-default"
+    }
+  ]
+}

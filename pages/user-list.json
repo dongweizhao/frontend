@@ -1,0 +1,470 @@
+{
+  "type": "page",
+  "title": "用户列表",
+  "remark": null,
+  "name": "menuList",
+  "body": [
+    {
+      "type": "crud",
+      "name": "userList",
+      "api": {
+        "method": "get",
+        "url": "/dp-manager/system/user/page",
+        "data": {
+          "current": "${page}",
+          "pageSize": "${perPage}",
+          "username": "${username}",
+          "mobile": "${mobile}",
+          "status": "${status}"
+        }
+      },
+      "filter": {
+        "title": "",
+        "mode": "inline",
+        "wrapWithPanel": false,
+        "submitText": "",
+        "controls": [
+          {
+            "type": "text",
+            "name": "username",
+            "placeholder": "用户账号",
+            "label": "用户账号",
+            "size": "sm",
+            "clearable": true
+          },
+          {
+            "type": "text",
+            "name": "mobile",
+            "placeholder": "手机号码",
+            "label": "手机号码",
+            "size": "sm",
+            "clearable": true
+          },
+          {
+            "type": "select",
+            "name": "status",
+            "placeholder": "状态",
+            "label": "状态",
+            "size": "sm",
+            "options": [
+              {
+                "label": "正常",
+                "value": "0"
+              },
+              {
+                "label": "禁用",
+                "value": "1"
+              }
+            ],
+            "clearable": true
+          },
+          {
+            "type": "submit",
+            "label": "搜索",
+            "size": "md",
+            "className": "btn-primary"
+          }
+        ],
+        "className": "m-b-sm"
+      },
+      "headerToolbar": [
+        {
+          "type": "button",
+          "actionType": "dialog",
+          "icon": "fa fa-plus",
+          "label": "新增",
+          "target": "menuList",
+          "primary": true,
+          "closeOnOutside": false,
+          "dialog": {
+            "title": "创建用户",
+            "size": "md",
+            "showErrorMsg": false,
+            "body": {
+              "type": "form",
+              "api": "post:/dp-manager/system/user/create",
+              "body": [
+                {
+                  "type": "group",
+                  "body": [
+                    {
+                      "type": "input-text",
+                      "name": "username",
+                      "label": "用户账号",
+                      "required": true
+                    },
+                    {
+                      "type": "input-password",
+                      "name": "password",
+                      "label": "密码",
+                      "required": true
+                    }
+                  ]
+                },
+                {
+                  "type": "group",
+                  "body": [
+                    {
+                      "name": "deptId",
+                      "label": "所属部门",
+                      "required": true,
+                      "type": "tree-select",
+                      "searchable": true,
+                      "iconField": "icon",
+                      "menuTpl": "<div class='flex justify-between'><span>${label}</span><span class='bg-gray-200 rounded p-1 text-xs text-center w-24'>${tag}</span></div>",
+                      "source": {
+                        "url": "/dp-manager/system/dept/tree",
+                        "responseData": {
+                          "options": "${items}"
+                        }
+                      }
+                    },
+                    {
+                      "type": "input-text",
+                      "name": "nickname",
+                      "label": "用户昵称",
+                      "required": true
+                    }
+                  ]
+                },
+                {
+                  "type": "group",
+                  "body": [
+                    {
+                      "type": "input-text",
+                      "name": "name",
+                      "label": "用户姓名"
+                    },
+                    {
+                      "type": "input-text",
+                      "name": "mobile",
+                      "label": "手机号码"
+                    }
+                  ]
+                },
+                {
+                  "type": "group",
+                  "body": [
+                    {
+                      "type": "input-text",
+                      "name": "email",
+                      "label": "用户邮箱"
+                    },
+                    {
+                      "type": "select",
+                      "name": "sex",
+                      "label": "性别",
+                      "options": [
+                        {
+                          "label": "男",
+                          "value": 1
+                        },
+                        {
+                          "label": "女",
+                          "value": 2
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "hidden",
+                  "name": "pwdChangeFlag",
+                  "label": "静态密码强制更新标识",
+                  "value": 0
+                },
+                {
+                  "type": "textarea",
+                  "name": "remark",
+                  "label": "备注"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "columns": [
+        {
+          "name": "id",
+          "label": "用户编号",
+          "sortable": true
+        },
+        {
+          "name": "username",
+          "label": "用户账号",
+          "sortable": true
+        },
+        {
+          "name": "name",
+          "label": "用户姓名",
+          "sortable": true
+        },
+        {
+          "name": "mobile",
+          "label": "手机号码",
+          "sortable": true
+        },
+        {
+          "name": "email",
+          "label": "用户邮箱",
+          "sortable": true
+        },
+        {
+          "name": "status",
+          "label": "状态",
+          "type": "mapping",
+          "map": {
+            "0": "<span class='label label-success'>正常</span>",
+            "1": "<span class='label label-danger'>禁用</span>"
+          }
+        },
+        {
+          "name": "loginStatus",
+          "label": "登录状态",
+          "type": "mapping",
+          "map": {
+            "2": "<span class='label label-info'>临时锁定</span>",
+            "1": "<span class='label label-success'>正常</span>",
+            "0": "<span class='label label-danger'>停用</span>"
+          }
+        },
+        {
+          "name": "userType",
+          "label": "用户类型",
+          "type": "mapping",
+          "map": {
+            "1": "<span class='label label-info'>系统管理员</span>",
+            "2": "<span class='label label-info'>集团管理员</span>",
+            "3": "<span class='label label-info'>普通人员</span>"
+          }
+        },
+        {
+          "name": "loginDate",
+          "label": "最后登录时间"
+        },
+        {
+          "name": "loginIp",
+          "label": "最后登录IP"
+        },
+        {
+          "name": "dept.name",
+          "label": "所属部门"
+        },
+        {
+          "name": "tenantId",
+          "label": "集团id",
+          "hidden": true
+        },
+        {
+          "name": "dept.id",
+          "label": "部门",
+          "hidden": true
+        },
+        {
+          "name": "pwdChangeFlag",
+          "label": "静态密码强制更新标识",
+          "hidden": true
+        },
+        {
+          "type": "operation",
+          "label": "操作",
+          "width": "",
+          "buttons": [
+            {
+              "type": "button-group",
+              "buttons": [
+                {
+                  "label": "修改",
+                  "type": "button",
+                  "level": "info",
+                  "actionType": "dialog",
+                  "dialog": {
+                    "size": "md",
+                    "title": "用户修改",
+                    "body": {
+                      "type": "form",
+                      "name": "user-edit-form",
+                      "api": "put:/dp-manager/system/user/update",
+                      "body": [
+                        {
+                          "type": "group",
+                          "body": [
+                            {
+                              "type": "hidden",
+                              "name": "id"
+                            },
+                            {
+                              "type": "input-text",
+                              "name": "username",
+                              "label": "用户账号",
+                              "disabled": true
+                            },
+                            {
+                              "type": "input-text",
+                              "name": "nickname",
+                              "label": "用户昵称",
+                              "required": true
+                            }
+                          ]
+                        },
+                        {
+                          "type": "group",
+                          "body": [
+                            {
+                              "name": "deptId",
+                              "label": "所属部门",
+                              "required": true,
+                              "type": "tree-select",
+                              "searchable": true,
+                              "iconField": "icon",
+                              "menuTpl": "<div class='flex justify-between'><span>${label}</span><span class='bg-gray-200 rounded p-1 text-xs text-center w-24'>${tag}</span></div>",
+                              "source": {
+                                "url": "/dp-manager/system/dept/tree",
+                                "responseData": {
+                                  "options": "${items}"
+                                }
+                              }
+                            },
+                            {
+                              "type": "input-text",
+                              "name": "name",
+                              "label": "用户姓名"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "group",
+                          "body": [
+                            {
+                              "type": "input-text",
+                              "name": "mobile",
+                              "label": "手机号码"
+                            },
+                            {
+                              "type": "input-text",
+                              "name": "email",
+                              "label": "用户邮箱"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "group",
+                          "body": [
+                            {
+                              "type": "select",
+                              "name": "sex",
+                              "label": "性别",
+                              "options": [
+                                {
+                                  "label": "男",
+                                  "value": "1"
+                                },
+                                {
+                                  "label": "女",
+                                  "value": "2"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "select",
+                              "name": "pwdChangeFlag",
+                              "label": "密码强制更新",
+                              "options": [
+                                {
+                                  "label": "否",
+                                  "value": "0"
+                                },
+                                {
+                                  "label": "是",
+                                  "value": "1"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "textarea",
+                          "name": "remark",
+                          "label": "备注"
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "type": "button",
+                  "label": "分配角色",
+                  "level": "info",
+                  "actionType": "dialog",
+                  "dialog": {
+                    "title": "角色分配",
+                    "body": {
+                      "type": "form",
+                      "name": "role-set-form",
+                      "initApi":"/dp-manager/system/permission/list-user-roles?userId=${id}",
+                      "api": {
+                        "method": "post",
+                        "url": "/dp-manager/system/permission/assign-user-role",
+                        "data": {
+                          "userId": "${userId}",
+                          "roleIds": "${roleIds|split}"
+                        }
+                      },
+                      "body": [
+                        {
+                          "type": "hidden",
+                          "name": "userId",
+                          "value": "${id}"
+                        },
+                        {
+                          "type": "input-text",
+                          "name": "username",
+                          "label": "用户账号",
+                          "disabled": true
+                        },
+                        {
+                          "type": "input-text",
+                          "name": "nickname",
+                          "label": "用户账号",
+                          "disabled": true
+                        },
+                        {
+                          "type": "select",
+                          "name": "roleIds",
+                          "label": "角色列表",
+                          "multiple": true,
+                          "source": {
+                            "url": "/dp-manager/system/role/list-all-simple"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "type": "button",
+                  "label": "删除",
+                  "level": "danger",
+                  "actionType": "ajax",
+                  "confirmText": "您确认要删除?",
+                  "api": "delete:/dp-manager/system/user/delete/?id=${id}"
+                }
+              ]
+            }
+          ],
+          "placeholder": "-",
+          "fixed": "right"
+        }
+      ],
+      "affixHeader": true,
+      "columnsTogglable": "auto",
+      "placeholder": "暂无数据",
+      "tableClassName": "table-db table-striped",
+      "headerClassName": "crud-table-header",
+      "footerClassName": "crud-table-footer",
+      "toolbarClassName": "crud-table-toolbar",
+      "combineNum": 0,
+      "bodyClassName": "panel-default"
+    }
+  ]
+}

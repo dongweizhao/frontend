@@ -9,7 +9,7 @@
         "redirect": "/index/1"
       },
       {
-        "label": "示例",
+        "label": "111",
         "children": [
           {
             "label": "页面A",
@@ -99,6 +99,7 @@
       },
       {
         "label": "分组2",
+        "hidden": true,
         "children": [
           {
             "label": "用户管理",

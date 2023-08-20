@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>amis admin</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+    <link
+            rel="stylesheet"
+            title="default"
+            href="https://unpkg.com/amis@beta/sdk/sdk.css"
+    />
+    <link
+            rel="stylesheet"
+            href="https://unpkg.com/amis@beta/sdk/helper.css"
+    />
+    <link
+            rel="stylesheet"
+            href="https://unpkg.com/amis@beta/sdk/iconfont.css"
+    />
+    <script src="https://unpkg.com/amis@beta/sdk/sdk.js"></script>
+    <script src="https://unpkg.com/vue@2"></script>
+    <script src="https://unpkg.com/history@4.10.1
+/umd/history.js"></script>
+    <style>
+        html,
+        body,
+        .app-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .login-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.5; /* 设置透明度 */
+            background-image: url(" /public/login.jpeg");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 96px 0px 8px;
+            padding: 20px;
+            /*margin-right: 70px;*/
+        }
+
+
+    </style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+    (function () {
+        let amis = amisRequire('amis/embed');
+        const match = amisRequire('path-to-regexp').match;
+
+        // 如果想用 browserHistory 请切换下这处代码, 其他不用变
+        // const history = History.createBrowserHistory();
+        const history = History.createHashHistory();
+
+        const app = {
+            "type": "page",
+            "body": [
+                {
+                    "type": "html",
+                    "html": "<div class=\"login-background\"></div>"
+                },
+                {
+                    "type": "grid",
+                    "valign": "middle",
+                    "align": "right",
+                    "className": "login-container",
+                    "columns": [{
+                        "lg": 4,
+                        "md": 6,
+                        "valign": "middle",
+                        "body": [
+                            {
+                                "type": "form",
+                                "mode": "horizontal",
+                                "horizontal": {
+                                    "left": 3,
+                                    "right": 9
+                                },
+                                "title": "登录",
+                                redirect: "/",
+                                "api": {
+                                    "url": "/dp-manager/system/login",
+                                    "data": {
+                                        "username": "${username}",
+                                        "password": "${password}"
+                                    },
+                                    "adaptor": function (payload, response) {
+                                        if (payload.status === 0) {
+                                            let newDate = new Date();//获取当前的时间对象
+                                            let nowTimeStamp = newDate.getTime();//获取当前时间对象的时间戳
+                                            nowTimeStamp += (3600);
+                                            newDate.setTime(nowTimeStamp);
+                                            let expires = "expires=" + newDate.toGMTString();
+                                            setCookie("Authorization", payload.data.Authorization, expires);
+                                        }
+                                        return payload
+                                    }
+                                },
+                                "controls": [
+                                    {
+                                        "type": "text",
+                                        "name": "username",
+                                        "label": "用户名",
+                                        "required": true,
+                                        "placeholder": "请输入用户名"
+                                    },
+                                    {
+                                        "type": "password",
+                                        "name": "password",
+                                        "label": "密码",
+                                        "required": true,
+                                        "value": "x0SItRx8cmDL6hMta9w7eg==",
+                                        "placeholder": "请输入密码"
+                                    }
+                                ]
+                            }
+                        ]
+
+                    }]
+
+                }
+            ]
+        }
+
+        let amisInstance = amis.embed(
+            '#root',
+            app, {
+                responseAdaptor(api, payload, query, request, response) {
+                    debugger;
+                    console.log(api);
+                    return payload;
+                }
+            }
+        )
+
+        function setCookie(name, value, expires, path, domain, secure) {
+            var cookieStr = name + "=" + encodeURIComponent(value);
+
+            if (expires) {
+                var date = new Date();
+                date.setTime(date.getTime() + expires * 24 * 60 * 60 * 1000);
+                cookieStr += "; expires=" + date.toGMTString();
+            }
+
+            if (path) {
+                cookieStr += "; path=" + path;
+            }
+
+            if (domain) {
+                cookieStr += "; domain=" + domain;
+            }
+
+            if (secure) {
+                cookieStr += "; secure";
+            }
+
+            document.cookie = cookieStr;
+        }
+
+    })();
+</script>
+</body>
+</html>

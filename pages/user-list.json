@@ -1,8 +1,6 @@
 {
   "type": "page",
-  "title": "用户列表",
-  "remark": null,
-  "name": "menuList",
+  "name": "userList",
   "body": [
     {
       "type": "crud",

@@ -1,7 +1,5 @@
 {
   "type": "page",
-  "title": "角色列表",
-  "remark": null,
   "name": "roleList",
   "body": [
     {

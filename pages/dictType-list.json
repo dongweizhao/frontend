@@ -1,0 +1,663 @@
+{
+  "type": "page",
+  "name": "dictTypeList",
+  "body": [
+    {
+      "type": "crud",
+      "name": "dictTypeList",
+      "api": {
+        "method": "get",
+        "url": "/dp-manager/system/dictType/page",
+        "data": {
+          "current": "${page}",
+          "pageSize": "${perPage}",
+          "type": "${type}",
+          "name": "${name}",
+          "status": "${status}"
+        }
+      },
+      "filter": {
+        "title": "",
+        "mode": "inline",
+        "wrapWithPanel": false,
+        "submitText": "",
+        "controls": [
+          {
+            "type": "text",
+            "name": "type",
+            "placeholder": "请输入",
+            "label": "字典类型",
+            "size": "sm",
+            "clearable": true
+          },
+          {
+            "type": "text",
+            "name": "name",
+            "placeholder": "请输入",
+            "label": "字典名称",
+            "size": "sm",
+            "clearable": true
+          },
+          {
+            "type": "select",
+            "name": "status",
+            "placeholder": "请输入",
+            "label": "状态",
+            "size": "sm",
+            "options": [
+              {
+                "label": "启用",
+                "value": "0"
+              },
+              {
+                "label": "停用",
+                "value": "1"
+              }
+            ],
+            "clearable": true
+          },
+          {
+            "type": "submit",
+            "label": "搜索",
+            "size": "md",
+            "className": "btn-primary"
+          }
+        ],
+        "className": "m-b-sm"
+      },
+      "headerToolbar": [
+        {
+          "type": "button",
+          "actionType": "dialog",
+          "icon": "fa fa-plus",
+          "label": "新增",
+          "target": "dpVariableList",
+          "primary": true,
+          "closeOnOutside": false,
+          "dialog": {
+            "title": "新增字典",
+            "size": "md",
+            "showErrorMsg": false,
+            "body": {
+              "type": "form",
+              "api": "post:/dp-manager/system/dictType/create",
+              "body": [
+                {
+                  "type": "input-text",
+                  "name": "name",
+                  "label": "字典名称",
+                  "required": true
+                },
+                {
+                  "type": "input-text",
+                  "name": "type",
+                  "label": "字典类型",
+                  "required": true
+                },
+                {
+                  "type": "radios",
+                  "name": "status",
+                  "label": "状态",
+                  "value": 0,
+                  "options": [
+                    {
+                      "label": "启用",
+                      "value": "0"
+                    },
+                    {
+                      "label": "停用",
+                      "value": "1"
+                    }
+                  ]
+                },
+                {
+                  "type": "textarea",
+                  "name": "remark",
+                  "label": "备注"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "columns": [
+        {
+          "name": "id",
+          "label": "字典编号"
+        },
+        {
+          "name": "name",
+          "label": "字典名称"
+        },
+        {
+          "name": "type",
+          "label": "字典类型"
+        },
+        {
+          "name": "status",
+          "label": "状态",
+          "type": "mapping",
+          "map": {
+            "0": "<span class='label label-info'>启用</span>",
+            "1": "<span class='label label-danger'>停用</span>"
+          }
+        },
+        {
+          "name": "remark",
+          "label": "备注",
+          "width": 200
+        },
+        {
+          "name": "createTime",
+          "label": "创建时间",
+          "width": 150
+        },
+        {
+          "type": "operation",
+          "label": "操作",
+          "width": 150,
+          "buttons": [
+            {
+              "type": "button-group",
+              "buttons": [
+                {
+                  "label": "修改",
+                  "type": "button",
+                  "level": "info",
+                  "actionType": "dialog",
+                  "dialog": {
+                    "size": "md",
+                    "title": "字典修改",
+                    "body": {
+                      "type": "form",
+                      "name": "dictType-edit-form",
+                      "api": "put:/dp-manager/system/dictType/update",
+                      "body": [
+                        {
+                          "type": "hidden",
+                          "name": "id"
+                        },
+                        {
+                          "type": "input-text",
+                          "name": "name",
+                          "label": "字典名称",
+                          "required": true
+                        },
+                        {
+                          "type": "input-text",
+                          "name": "type",
+                          "label": "字典类型",
+                          "required": true
+                        },
+                        {
+                          "type": "radios",
+                          "name": "status",
+                          "label": "状态",
+                          "value": 0,
+                          "options": [
+                            {
+                              "label": "启用",
+                              "value": "0"
+                            },
+                            {
+                              "label": "停用",
+                              "value": "1"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "textarea",
+                          "name": "remark",
+                          "label": "备注"
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "label": "数据",
+                  "type": "button",
+                  "level": "info",
+                  "actionType": "dialog",
+                  "dialog": {
+                    "size": "full",
+                    "type": "page",
+                    "title": "数据字典",
+                    "remark": null,
+                    "name": "dictDataList",
+                    "body": [
+                      {
+                        "type": "crud",
+                        "name": "dictDataCrud",
+                        "id": "dictDataCrud",
+                        "api": {
+                          "method": "get",
+                          "url": "/dp-manager/system/dictData/page",
+                          "data": {
+                            "current": "${page}",
+                            "pageSize": "${perPage}",
+                            "dictType": "${dictType}",
+                            "status": "${dataStatus}",
+                            "label": "${label}"
+                          }
+                        },
+                        "filter": {
+                          "title": "",
+                          "mode": "inline",
+                          "wrapWithPanel": false,
+                          "controls": [
+                            {
+                              "type": "select",
+                              "name": "dictType",
+                              "placeholder": "请选择",
+                              "label": "字典名称",
+                              "size": "sm",
+                              "value": "${type}",
+                              "inline": true,
+                              "source": {
+                                "url": "/dp-manager/system/dictType/selectList",
+                                "method": "post",
+                                "responseData": {
+                                  "options": "${items}"
+                                }
+                              },
+                              "clearable": true,
+                              "onEvent": {
+                                "change": {
+                                  "actions": [
+                                    {
+                                      "actionType": "reload",
+                                      "componentId": "dictDataCrud"
+                                    }
+                                  ]
+                                }
+                              }
+                            },
+                            {
+                              "type": "text",
+                              "name": "label",
+                              "placeholder": "请输入",
+                              "label": "字典标签",
+                              "size": "sm",
+                              "clearable": true
+                            },
+                            {
+                              "type": "select",
+                              "name": "dataStatus",
+                              "placeholder": "请输入",
+                              "label": "数据状态",
+                              "size": "sm",
+                              "options": [
+                                {
+                                  "label": "启用",
+                                  "value": "0"
+                                },
+                                {
+                                  "label": "停用",
+                                  "value": "1"
+                                }
+                              ],
+                              "clearable": true
+                            },
+                            {
+                              "type": "submit",
+                              "label": "搜索",
+                              "size": "md",
+                              "className": "btn-primary"
+                            }
+                          ],
+                          "className": "m-b-sm"
+                        },
+                        "headerToolbar": [
+                          {
+                            "type": "button",
+                            "actionType": "dialog",
+                            "icon": "fa fa-plus",
+                            "label": "新增",
+                            "target": "dictDataList",
+                            "primary": true,
+                            "closeOnOutside": false,
+                            "dialog": {
+                              "title": "新增字典",
+                              "size": "md",
+                              "showErrorMsg": false,
+                              "body": {
+                                "type": "form",
+                                "api": "post:/dp-manager/system/dictData/create",
+                                "body": [
+                                  {
+                                    "type": "group",
+                                    "body": [
+                                      {
+                                        "type": "select",
+                                        "name": "dictType",
+                                        "label": "字典类型",
+                                        "disabled": true,
+                                        "id": "dictType-select",
+                                        "source": {
+                                          "url": "/dp-manager/system/dictType/selectList",
+                                          "method": "post",
+                                          "responseData": {
+                                            "options": "${items}"
+                                          }
+                                        }
+                                      },
+                                      {
+                                        "type": "input-text",
+                                        "name": "label",
+                                        "label": "字典标签",
+                                        "required": true
+                                      }
+
+                                    ]
+                                  },
+                                  {
+                                    "type": "group",
+                                    "body": [
+                                      {
+                                        "type": "input-text",
+                                        "name": "value",
+                                        "label": "字典值",
+                                        "required": true
+                                      },
+                                      {
+                                        "type": "radios",
+                                        "name": "status",
+                                        "label": "状态",
+                                        "value": 0,
+                                        "options": [
+                                          {
+                                            "label": "启用",
+                                            "value": "0"
+                                          },
+                                          {
+                                            "label": "停用",
+                                            "value": "1"
+                                          }
+                                        ]
+                                      }
+
+                                    ]
+                                  },
+                                  {
+                                    "type": "group",
+                                    "body": [
+                                      {
+                                        "type": "input-text",
+                                        "name": "sort",
+                                        "label": "显示顺序",
+                                        "value": "1"
+                                      },
+                                      {
+                                        "type": "select",
+                                        "name": "colorType",
+                                        "label": "颜色类型",
+                                        "options": [
+                                          {
+                                            "label": "default",
+                                            "value": "default"
+                                          },
+                                          {
+                                            "label": "primary",
+                                            "value": "primary"
+                                          },
+                                          {
+                                            "label": "success",
+                                            "value": "success"
+                                          },
+                                          {
+                                            "label": "info",
+                                            "value": "info"
+                                          },
+                                          {
+                                            "label": "warning",
+                                            "value": "warning"
+                                          },
+                                          {
+                                            "label": "danger",
+                                            "value": "danger"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "textarea",
+                                    "name": "remark",
+                                    "label": "备注"
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        ],
+                        "columns": [
+                          {
+                            "name": "id",
+                            "label": "字典编号"
+                          },
+                          {
+                            "name": "label",
+                            "label": "字典标签"
+                          },
+                          {
+                            "name": "value",
+                            "label": "字典值"
+                          },
+                          {
+                            "name": "dictType",
+                            "label": "字典类型"
+                          },
+                          {
+                            "name": "status",
+                            "label": "数据状态",
+                            "type": "mapping",
+                            "map": {
+                              "0": "<span class='label label-info'>启用</span>",
+                              "1": "<span class='label label-danger'>停用</span>"
+                            }
+                          },
+                          {
+                            "name": "sort",
+                            "label": "显示顺序"
+                          },
+                          {
+                            "name": "colorType",
+                            "label": "样式"
+                          },
+                          {
+                            "name": "remark",
+                            "label": "备注",
+                            "width": 200
+                          },
+                          {
+                            "name": "createTime",
+                            "label": "创建时间",
+                            "width": 150
+                          },
+                          {
+                            "type": "operation",
+                            "label": "操作",
+                            "width": 150,
+                            "buttons": [
+                              {
+                                "type": "button-group",
+                                "buttons": [
+                                  {
+                                    "label": "修改",
+                                    "type": "button",
+                                    "level": "info",
+                                    "actionType": "dialog",
+                                    "dialog": {
+                                      "size": "md",
+                                      "title": "字典修改",
+                                      "body": {
+                                        "type": "form",
+                                        "name": "dictData-edit-form",
+                                        "api": "put:/dp-manager/system/dictData/update",
+                                        "body": [
+                                          {
+                                            "type": "hidden",
+                                            "name": "id"
+                                          },
+                                          {
+                                            "type": "group",
+                                            "body": [
+                                              {
+                                                "type": "select",
+                                                "name": "dictType",
+                                                "placeholder": "请选择",
+                                                "label": "字典类型",
+                                                "disabled": true,
+                                                "value": "${dictType}",
+                                                "source": {
+                                                  "url": "/dp-manager/system/dictType/selectList",
+                                                  "method": "post",
+                                                  "responseData": {
+                                                    "options": "${items}"
+                                                  }
+                                                }
+                                              },
+                                              {
+                                                "type": "input-text",
+                                                "name": "label",
+                                                "label": "字典标签",
+                                                "required": true
+                                              }
+
+                                            ]
+                                          },
+                                          {
+                                            "type": "group",
+                                            "body": [
+                                              {
+                                                "type": "input-text",
+                                                "name": "value",
+                                                "label": "字典值",
+                                                "required": true
+                                              },
+                                              {
+                                                "type": "radios",
+                                                "name": "status",
+                                                "label": "状态",
+                                                "value": 0,
+                                                "options": [
+                                                  {
+                                                    "label": "启用",
+                                                    "value": "0"
+                                                  },
+                                                  {
+                                                    "label": "停用",
+                                                    "value": "1"
+                                                  }
+                                                ]
+                                              }
+
+                                            ]
+                                          },
+                                          {
+                                            "type": "group",
+                                            "body": [
+                                              {
+                                                "type": "input-text",
+                                                "name": "sort",
+                                                "label": "显示顺序",
+                                                "value": "1"
+                                              },
+                                              {
+                                                "type": "select",
+                                                "name": "colorType",
+                                                "label": "颜色类型",
+                                                "options": [
+                                                  {
+                                                    "label": "default",
+                                                    "value": "default"
+                                                  },
+                                                  {
+                                                    "label": "primary",
+                                                    "value": "primary"
+                                                  },
+                                                  {
+                                                    "label": "success",
+                                                    "value": "success"
+                                                  },
+                                                  {
+                                                    "label": "info",
+                                                    "value": "info"
+                                                  },
+                                                  {
+                                                    "label": "warning",
+                                                    "value": "warning"
+                                                  },
+                                                  {
+                                                    "label": "danger",
+                                                    "value": "danger"
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "type": "textarea",
+                                            "name": "remark",
+                                            "label": "备注"
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "button",
+                                    "label": "删除",
+                                    "level": "danger",
+                                    "actionType": "ajax",
+                                    "confirmText": "您确认要删除?",
+                                    "api": "delete:/dp-manager/system/dictData/delete/?id=${id}"
+                                  }
+                                ]
+                              }
+                            ],
+                            "placeholder": "-",
+                            "fixed": "right"
+                          }
+                        ],
+                        "affixHeader": true,
+                        "columnsTogglable": "auto",
+                        "placeholder": "暂无数据",
+                        "tableClassName": "table-db table-striped",
+                        "headerClassName": "crud-table-header",
+                        "footerClassName": "crud-table-footer",
+                        "toolbarClassName": "crud-table-toolbar",
+                        "combineNum": 0,
+                        "bodyClassName": "panel-default"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "button",
+                  "label": "删除",
+                  "level": "danger",
+                  "actionType": "ajax",
+                  "confirmText": "您确认要删除?",
+                  "api": "delete:/dp-manager/system/dictType/delete/?id=${id}"
+                }
+              ]
+            }
+          ],
+          "placeholder": "-",
+          "fixed": "right"
+        }
+      ],
+      "affixHeader": true,
+      "columnsTogglable": "auto",
+      "placeholder": "暂无数据",
+      "tableClassName": "table-db table-striped",
+      "headerClassName": "crud-table-header",
+      "footerClassName": "crud-table-footer",
+      "toolbarClassName": "crud-table-toolbar",
+      "combineNum": 0,
+      "bodyClassName": "panel-default"
+    }
+  ]
+}

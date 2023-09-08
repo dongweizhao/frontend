@@ -1,0 +1,675 @@
+{
+  "type": "page",
+  "body": {
+    "type": "crud",
+    "api": {
+      "method": "get",
+      "url": "/dp-manager/dp/app/template/page",
+      "data": {
+        "current": "${page}",
+        "pageSize": "${perPage}",
+        "appCode": "${appCode}",
+        "appSubCode": "${appSubCode}",
+        "appSubName": "${appSubName}"
+      }
+    },
+    "filter": {
+      "title": "",
+      "mode": "inline",
+      "submitText": "",
+      "wrapWithPanel": false,
+      "controls": [
+        {
+          "type": "select",
+          "name": "appCode",
+          "placeholder": "请选择",
+          "label": "系统代码",
+          "size": "md",
+          "inline": true,
+          "source": {
+            "url": "/dp-manager/system/dictData/selectByKey",
+            "method": "post",
+            "data": {
+              "dictType": "system_type"
+            },
+            "responseData": {
+              "options": "${items}"
+            }
+          },
+          "clearable": true
+        },
+        {
+          "type": "select",
+          "name": "appSubCode",
+          "placeholder": "请选择",
+          "label": "子系统代码",
+          "initFetchOn": "data.appCode",
+          "size": "md",
+          "inline": true,
+          "source": {
+            "url": "/dp-manager/system/dictData/selectByKey?dictType=${appCode}",
+            "method": "post",
+            "data": {
+              "dictType": "${appCode}"
+            },
+            "responseData": {
+              "options": "${items}"
+            }
+          },
+          "clearable": true
+        },
+        {
+          "type": "submit",
+          "label": "搜索",
+          "size": "md",
+          "level": "primary"
+        }
+      ]
+    },
+    "headerToolbar": [
+      {
+        "type": "button",
+        "actionType": "dialog",
+        "label": "新增",
+        "icon": "fa fa-plus",
+        "closeOnOutside": false,
+        "dialog": {
+          "title": "新增参数",
+          "size": "lg",
+          "showErrorMsg": false,
+          "body": {
+            "type": "form",
+            "api": "post:/dp-manager/dp/app/template/create",
+            "body": [
+              {
+                "type": "group",
+                "body": [
+                  {
+                    "type": "select",
+                    "name": "appCode",
+                    "placeholder": "请选择",
+                    "label": "系统代码",
+                    "labelWidth": 130,
+                    "size": "full",
+                    "required": true,
+                    "source": {
+                      "url": "/dp-manager/system/dictData/selectByKey",
+                      "method": "post",
+                      "data": {
+                        "dictType": "system_type"
+                      },
+                      "responseData": {
+                        "options": "${items}"
+                      }
+                    },
+                    "clearable": true
+                  },
+                  {
+                    "type": "select",
+                    "name": "appSubCode",
+                    "placeholder": "请选择",
+                    "label": "子系统代码",
+                    "labelWidth": 130,
+                    "required": true,
+                    "initFetchOn": "data.appCode",
+                    "size": "full",
+                    "source": {
+                      "url": "/dp-manager/system/dictData/selectByKey?dictType=${appCode}",
+                      "method": "post",
+                      "data": {
+                        "dictType": "${appCode}"
+                      },
+                      "responseData": {
+                        "options": "${items}"
+                      }
+                    },
+                    "clearable": true
+                  }
+                ]
+              },
+              {
+                "type": "group",
+                "body": [
+                  {
+                    "type": "input-text",
+                    "name": "appSubName",
+                    "label": "子系统名称",
+                    "required": true,
+                    "labelWidth": 130,
+                    "size": "full"
+                  },
+                  {
+                    "type": "input-text",
+                    "name": "apolloAppId",
+                    "label": "配置中心AppId",
+                    "required": true,
+                    "labelWidth": 130,
+                    "value": "${appSubCode}",
+                    "size": "full"
+                  }
+                ]
+              },
+              {
+                "type": "editor",
+                "name": "content",
+                "label": "模版内容",
+                "language": "powershell"
+              },
+              {
+                "type": "textarea",
+                "name": "remark",
+                "label": "备注"
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "columns": [
+      {
+        "name": "id",
+        "label": "参数编号",
+        "sortable": true,
+        "hidden": true
+      },
+      {
+        "name": "appCode",
+        "label": "系统代码"
+      },
+      {
+        "name": "appSubCode",
+        "label": "子系统代码"
+      },
+      {
+        "name": "appSubName",
+        "label": "子系统名称"
+      },
+      {
+        "name": "apolloAppId",
+        "label": "配置中心appId"
+      },
+      {
+        "label": "更新时间",
+        "name": "updateTime"
+      },
+      {
+        "type": "operation",
+        "label": "操作",
+        "width": "",
+        "buttons": [
+          {
+            "type": "button-group",
+            "buttons": [
+              {
+                "type": "button",
+                "label": "编辑",
+                "level": "info",
+                "actionType": "dialog",
+                "dialog": {
+                  "title": "编辑",
+                  "size": "lg",
+                  "body": {
+                    "type": "form",
+                    "name": "template-edit-form",
+                    "api": "put:/dp-manager/dp/app/template/update",
+                    "initApi": "/dp-manager/dp/app/template/get?id=${id}",
+                    "body": [
+                      {
+                        "type": "hidden",
+                        "name": "id"
+                      },
+                      {
+                        "type": "group",
+                        "body": [
+                          {
+                            "type": "select",
+                            "name": "appCode",
+                            "placeholder": "请选择",
+                            "label": "系统代码",
+                            "size": "full",
+                            "required": true,
+                            "labelWidth": 130,
+                            "source": {
+                              "url": "/dp-manager/system/dictData/selectByKey",
+                              "method": "post",
+                              "data": {
+                                "dictType": "system_type"
+                              },
+                              "responseData": {
+                                "options": "${items}"
+                              }
+                            },
+                            "clearable": true
+                          },
+                          {
+                            "type": "select",
+                            "name": "appSubCode",
+                            "placeholder": "请选择",
+                            "label": "子系统代码",
+                            "labelWidth": 130,
+                            "required": true,
+                            "initFetchOn": "data.appCode",
+                            "size": "full",
+                            "source": {
+                              "url": "/dp-manager/system/dictData/selectByKey?dictType=${appCode}",
+                              "method": "post",
+                              "data": {
+                                "dictType": "${appCode}"
+                              },
+                              "responseData": {
+                                "options": "${items}"
+                              }
+                            },
+                            "clearable": true,
+                            "onEvent": {
+                              "change": {
+                                "actions": [
+                                  {
+                                    "actionType": "setValue",
+                                    "componentId": "updateApolloAppId",
+                                    "args": {
+                                      "value": "${appSubCode}"
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "type": "group",
+                        "body": [
+                          {
+                            "type": "input-text",
+                            "name": "appSubName",
+                            "label": "子系统名称",
+                            "size": "full",
+                            "required": true,
+                            "labelWidth": 130
+                          },
+                          {
+                            "type": "input-text",
+                            "name": "apolloAppId",
+                            "id": "updateApolloAppId",
+                            "label": "配置中心AppId",
+                            "required": true,
+                            "labelWidth": 130,
+                            "size": "full"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "editor",
+                        "name": "content",
+                        "label": "模版内容",
+                        "language": "powershell"
+                      },
+                      {
+                        "type": "textarea",
+                        "name": "remark",
+                        "label": "备注"
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "type": "button",
+                "label": "预览",
+                "level": "info",
+                "actionType": "dialog",
+                "dialog": {
+                  "title": "预览",
+                  "size": "lg",
+                  "body": {
+                    "type": "form",
+                    "initApi": "/dp-manager/dp/app/template/preview?id=${id}",
+                    "body": [
+                      {
+                        "type": "static",
+                        "name": "appCode",
+                        "label": "系统代码",
+                        "labelWidth": 130
+                      },
+                      {
+                        "type": "static",
+                        "name": "appSubCode",
+                        "label": "子系统代码",
+                        "labelWidth": 130
+                      },
+                      {
+                        "type": "static",
+                        "name": "appSubName",
+                        "label": "子系统名称",
+                        "labelWidth": 130
+                      },
+                      {
+                        "type": "static",
+                        "name": "apolloAppId",
+                        "label": "配置中心AppId",
+                        "labelWidth": 130
+                      },
+                      {
+                        "type": "editor",
+                        "name": "content",
+                        "label": "最终配置",
+                        "language": "powershell",
+                        "disabled": true,
+                        "labelWidth": 130
+                      },
+                      {
+                        "type": "static",
+                        "name": "remark",
+                        "label": "备注",
+                        "labelWidth": 130
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "type": "button",
+                "label": "同步配置",
+                "level": "info",
+                "actionType": "dialog",
+                "dialog": {
+                  "title": "同步配置",
+                  "size": "lg",
+                  "showErrorMsg": false,
+                  "body": {
+                    "type": "form",
+                    "api": {
+                      "method": "POST",
+                      "url": "/dp-manager/dp/app/apollo/createItems",
+                      "data": {
+                        "templateId": "${templateId}",
+                        "clusterName": "${clusterName}",
+                        "appId": "${appId}"
+                      }
+                    },
+                    "initApi": "/dp-manager/dp/app/template/preview?id=${id}",
+                    "body": [
+                      {
+                        "type": "hidden",
+                        "name": "templateId",
+                        "value": "${id}"
+                      },
+                      {
+                        "type": "static-tpl",
+                        "name": "describe",
+                        "label": "功能说明",
+                        "tpl": "<div style='color:red;'>此功能只是把配置同步到配置中心，但是不进行发布，如果需要进行发布需要点击发布配置按钮</div>",
+                        "labelWidth": 130
+                      },
+                      {
+                        "type": "static",
+                        "name": "appSubName",
+                        "label": "子系统名称",
+                        "labelWidth": 130
+                      },
+                      {
+                        "type": "static",
+                        "name": "appId",
+                        "value": "${apolloAppId}",
+                        "label": "配置中心AppId",
+                        "labelWidth": 130
+                      },
+                      {
+                        "type": "editor",
+                        "name": "content",
+                        "label": "最终配置",
+                        "language": "powershell",
+                        "disabled": true,
+                        "labelWidth": 130
+                      },
+                      {
+                        "type": "input-text",
+                        "name": "clusterName",
+                        "label": "集群名称",
+                        "required": true,
+                        "labelWidth": 130,
+                        "value": "default",
+                        "size": "full"
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "type": "button",
+                "label": "发布配置",
+                "level": "warning",
+                "actionType": "dialog",
+                "dialog": {
+                  "title": "发布配置",
+                  "size": "lg",
+                  "showErrorMsg": false,
+                  "body": {
+                    "type": "form",
+                    "api": {
+                      "method": "POST",
+                      "url": "/dp-manager/dp/app/apollo/release",
+                      "data": {
+                        "templateId": "${templateId}",
+                        "clusterName": "${clusterName}",
+                        "appId": "${appId}",
+                        "releaseComment": "${releaseComment}"
+                      }
+                    },
+                    "initApi": "/dp-manager/dp/app/template/preview?id=${id}",
+                    "body": [
+                      {
+                        "type": "hidden",
+                        "name": "templateId",
+                        "value": "${id}"
+                      },
+                      {
+                        "type": "static",
+                        "name": "appSubName",
+                        "label": "子系统名称",
+                        "labelWidth": 130
+                      },
+                      {
+                        "type": "static",
+                        "name": "appId",
+                        "value": "${apolloAppId}",
+                        "label": "配置中心AppId",
+                        "labelWidth": 130
+                      },
+                      {
+                        "type": "input-text",
+                        "name": "clusterName",
+                        "label": "集群名称",
+                        "required": true,
+                        "labelWidth": 130,
+                        "value": "default",
+                        "size": "full"
+                      },
+                      {
+                        "type": "textarea",
+                        "name": "releaseComment",
+                        "label": "发布备注",
+                        "required": true,
+                        "labelWidth": 130
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "type": "button",
+                "label": "发布记录",
+                "level": "info",
+                "actionType": "dialog",
+                "dialog": {
+                  "title": "发布记录",
+                  "size": "xl",
+                  "actions": [
+                    {
+                      "type": "button",
+                      "actionType": "confirm",
+                      "label": "关闭"
+                    }
+                  ],
+                  "body": {
+                    "type": "crud",
+                    "name": "releaseList",
+                    "api": {
+                      "method": "get",
+                      "url": "/dp-manager/dp/app/apollo/release/page",
+                      "data": {
+                        "current": "${page}",
+                        "pageSize": "${perPage}",
+                        "appId": "${apolloAppId}",
+                        "createTimeBetween": "${createTimeBetween}"
+                      }
+                    },
+                    "filter": {
+                      "title": "",
+                      "mode": "inline",
+                      "controls": [
+                        {
+                          "type": "input-date-range",
+                          "name": "createTimeBetween",
+                          "placeholder": "请输入",
+                          "label": "发布时间",
+                          "clearable": true
+                        },
+                        {
+                          "type": "submit",
+                          "label": "搜索",
+                          "size": "md",
+                          "level": "primary"
+                        }
+                      ],
+                      "className": "m-b-sm"
+                    },
+                    "columns": [
+                      {
+                        "name": "appId",
+                        "label": "appId"
+                      },
+                      {
+                        "name": "clusterName",
+                        "label": "clusterName"
+                      },
+                      {
+                        "name": "namespaceName",
+                        "label": "namespaceName"
+                      },
+                      {
+                        "name": "comment",
+                        "label": "发布说明"
+                      },
+                      {
+                        "name": "configText",
+                        "label": "发布配置",
+                        "hidden": true
+                      },
+                      {
+                        "name": "createTime",
+                        "label": "发布时间"
+                      },
+                      {
+                        "type": "operation",
+                        "label": "操作",
+                        "width": 150,
+                        "buttons": [
+                          {
+                            "type": "button-group",
+                            "buttons": [
+                              {
+                                "label": "详情",
+                                "type": "button",
+                                "level": "info",
+                                "actionType": "dialog",
+                                "actions": [
+                                  {
+                                    "type": "button",
+                                    "actionType": "confirm",
+                                    "label": "关闭"
+                                  }
+                                ],
+                                "dialog": {
+                                  "size": "md",
+                                  "title": "发布详情",
+                                  "body": {
+                                    "type": "form",
+                                    "name": "release-detail-form",
+                                    "body": [
+                                      {
+                                        "type": "static",
+                                        "name": "apolloAppId",
+                                        "label": "配置中心AppId",
+                                        "labelWidth": 130
+                                      },
+                                      {
+                                        "type": "static",
+                                        "name": "comment",
+                                        "label": "发布说明",
+                                        "labelWidth": 130
+                                      },
+                                      {
+                                        "type": "static",
+                                        "name": "createTime",
+                                        "label": "发布时间",
+                                        "labelWidth": 130
+                                      },
+                                      {
+                                        "type": "editor",
+                                        "name": "configText",
+                                        "label": "最终配置",
+                                        "language": "json",
+                                        "disabled": true,
+                                        "labelWidth": 130
+                                      }
+                                    ]
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        ],
+                        "placeholder": "-",
+                        "fixed": "right"
+                      }
+                    ],
+                    "affixHeader": true,
+                    "columnsTogglable": "auto",
+                    "placeholder": "暂无数据",
+                    "tableClassName": "table-db table-striped",
+                    "headerClassName": "crud-table-header",
+                    "footerClassName": "crud-table-footer",
+                    "toolbarClassName": "crud-table-toolbar",
+                    "combineNum": 0,
+                    "bodyClassName": "panel-default"
+                  }
+                }
+              },
+              {
+                "type": "button",
+                "label": "删除",
+                "level": "danger",
+                "actionType": "ajax",
+                "confirmText": "您确认要删除?",
+                "api": "delete:/dp-manager/dp/app/template/delete/?id=${id}"
+              }
+            ]
+          }
+        ],
+        "placeholder": "-",
+        "fixed": "right"
+      }
+    ],
+    "affixHeader": true,
+    "columnsTogglable": "auto",
+    "placeholder": "暂无数据",
+    "tableClassName": "table-db table-striped",
+    "headerClassName": "crud-table-header",
+    "footerClassName": "crud-table-footer",
+    "toolbarClassName": "crud-table-toolbar",
+    "combineNum": 0,
+    "bodyClassName": "panel-default"
+  }
+}

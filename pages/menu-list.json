@@ -1,7 +1,5 @@
 {
   "type": "page",
-  "title": "菜单列表",
-  "remark": null,
   "name": "menuList",
   "body": [
     {
@@ -84,17 +82,17 @@
             "title": "创建记录",
             "body": {
               "type": "form",
-              "api": "post:/dp-manager/system/menu/create",
+              "api": {
+                "url": "dp-manager/system/menu/create",
+                "method": "post"
+              },
               "body": [
                 {
                   "type": "tree-select",
                   "name": "parentId",
                   "label": "父级菜单",
                   "source": {
-                    "url": "/dp-manager/system/menu/selectMenuTree",
-                    "responseData": {
-                      "options": "${items}"
-                    }
+                    "url": "/dp-manager/system/menu/selectMenuTree"
                   }
                 },
                 {
@@ -216,6 +214,7 @@
           "name": "id",
           "label": "菜单编号",
           "width": 20,
+          "hidden": true,
           "sortable": true
         },
         {

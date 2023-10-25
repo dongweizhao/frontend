@@ -351,7 +351,7 @@
                         "labelWidth": 130
                       },
                       {
-                        "type": "content",
+                        "type": "textarea",
                         "name": "content",
                         "label": "最终配置",
                         "language": "powershell",

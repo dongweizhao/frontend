@@ -150,7 +150,7 @@
                 ]
               },
               {
-                "type": "textarea",
+                "type": "editor",
                 "name": "content",
                 "label": "模版内容",
                 "language": "powershell"
@@ -300,7 +300,7 @@
                         ]
                       },
                       {
-                        "type": "textarea",
+                        "type": "editor",
                         "name": "content",
                         "label": "模版内容",
                         "language": "powershell"

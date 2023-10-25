@@ -351,7 +351,7 @@
                         "labelWidth": 130
                       },
                       {
-                        "type": "textarea",
+                        "type": "editor",
                         "name": "content",
                         "label": "最终配置",
                         "language": "powershell",
@@ -416,7 +416,7 @@
                         "labelWidth": 130
                       },
                       {
-                        "type": "textarea",
+                        "type": "editor",
                         "name": "content",
                         "label": "最终配置",
                         "language": "powershell",
@@ -487,7 +487,7 @@
                         "size": "full"
                       },
                       {
-                        "type": "textarea",
+                        "type": "editor",
                         "name": "releaseComment",
                         "label": "发布备注",
                         "required": true,
@@ -617,7 +617,7 @@
                                         "labelWidth": 130
                                       },
                                       {
-                                        "type": "textarea",
+                                        "type": "editor",
                                         "name": "configText",
                                         "label": "最终配置",
                                         "language": "json",

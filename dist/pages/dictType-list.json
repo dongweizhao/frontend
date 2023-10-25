@@ -120,6 +120,10 @@
           }
         }
       ],
+      "footerToolbar": [
+        "switch-per-page",
+        "pagination"
+      ],
       "columns": [
         {
           "name": "id",

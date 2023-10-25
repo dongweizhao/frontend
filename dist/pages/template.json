@@ -89,8 +89,6 @@
                     "name": "appCode",
                     "placeholder": "请选择",
                     "label": "系统代码",
-                    "labelWidth": 130,
-                    "size": "full",
                     "required": true,
                     "source": {
                       "url": "/dp-manager/system/dictData/selectByKey",
@@ -101,18 +99,16 @@
                       "responseData": {
                         "options": "${items}"
                       }
-                    },
-                    "clearable": true
+                    }
                   },
                   {
                     "type": "select",
                     "name": "appSubCode",
                     "placeholder": "请选择",
                     "label": "子系统代码",
-                    "labelWidth": 130,
                     "required": true,
+                    "labelWidth": 130,
                     "initFetchOn": "data.appCode",
-                    "size": "full",
                     "source": {
                       "url": "/dp-manager/system/dictData/selectByKey?dictType=${appCode}",
                       "method": "post",
@@ -122,8 +118,7 @@
                       "responseData": {
                         "options": "${items}"
                       }
-                    },
-                    "clearable": true
+                    }
                   }
                 ]
               },
@@ -134,9 +129,7 @@
                     "type": "input-text",
                     "name": "appSubName",
                     "label": "子系统名称",
-                    "required": true,
-                    "labelWidth": 130,
-                    "size": "full"
+                    "required": true
                   },
                   {
                     "type": "input-text",
@@ -144,8 +137,7 @@
                     "label": "配置中心AppId",
                     "required": true,
                     "labelWidth": 130,
-                    "value": "${appSubCode}",
-                    "size": "full"
+                    "value": "${appSubCode}"
                   }
                 ]
               },
@@ -164,6 +156,10 @@
           }
         }
       }
+    ],
+    "footerToolbar": [
+      "switch-per-page",
+      "pagination"
     ],
     "columns": [
       {
@@ -228,7 +224,6 @@
                             "label": "系统代码",
                             "size": "full",
                             "required": true,
-                            "labelWidth": 130,
                             "source": {
                               "url": "/dp-manager/system/dictData/selectByKey",
                               "method": "post",
@@ -246,10 +241,9 @@
                             "name": "appSubCode",
                             "placeholder": "请选择",
                             "label": "子系统代码",
-                            "labelWidth": 130,
                             "required": true,
+                            "labelWidth": 130,
                             "initFetchOn": "data.appCode",
-                            "size": "full",
                             "source": {
                               "url": "/dp-manager/system/dictData/selectByKey?dictType=${appCode}",
                               "method": "post",
@@ -285,8 +279,7 @@
                             "name": "appSubName",
                             "label": "子系统名称",
                             "size": "full",
-                            "required": true,
-                            "labelWidth": 130
+                            "required": true
                           },
                           {
                             "type": "input-text",
@@ -294,8 +287,7 @@
                             "id": "updateApolloAppId",
                             "label": "配置中心AppId",
                             "required": true,
-                            "labelWidth": 130,
-                            "size": "full"
+                            "labelWidth": 130
                           }
                         ]
                       },

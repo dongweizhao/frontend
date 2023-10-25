@@ -74,6 +74,10 @@
         ],
         "className": "m-b-sm"
       },
+      "footerToolbar": [
+        "switch-per-page",
+        "pagination"
+      ],
       "headerToolbar": [
         {
           "type": "button",

@@ -491,67 +491,6 @@
               },
               {
                 "type": "button",
-                "label": "发布配置",
-                "level": "warning",
-                "actionType": "dialog",
-                "dialog": {
-                  "title": "发布配置",
-                  "size": "lg",
-                  "showErrorMsg": false,
-                  "body": {
-                    "type": "form",
-                    "api": {
-                      "method": "POST",
-                      "url": "/dp-manager/dp/app/apollo/release",
-                      "data": {
-                        "templateId": "${templateId}",
-                        "clusterName": "${clusterName}",
-                        "appId": "${appId}",
-                        "releaseComment": "${releaseComment}"
-                      }
-                    },
-                    "initApi": "/dp-manager/dp/app/template/preview?id=${id}",
-                    "body": [
-                      {
-                        "type": "hidden",
-                        "name": "templateId",
-                        "value": "${id}"
-                      },
-                      {
-                        "type": "static",
-                        "name": "appSubName",
-                        "label": "子系统名称",
-                        "labelWidth": 130
-                      },
-                      {
-                        "type": "static",
-                        "name": "appId",
-                        "value": "${apolloAppId}",
-                        "label": "配置中心AppId",
-                        "labelWidth": 130
-                      },
-                      {
-                        "type": "input-text",
-                        "name": "clusterName",
-                        "label": "集群名称",
-                        "required": true,
-                        "labelWidth": 130,
-                        "value": "default",
-                        "size": "full"
-                      },
-                      {
-                        "type": "editor",
-                        "name": "releaseComment",
-                        "label": "发布备注",
-                        "required": true,
-                        "labelWidth": 130
-                      }
-                    ]
-                  }
-                }
-              },
-              {
-                "type": "button",
                 "label": "配置并发布",
                 "level": "warning",
                 "actionType": "dialog",

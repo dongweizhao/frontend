@@ -1,0 +1,23 @@
+{
+  "status": 0,
+  "msg": "",
+  "data": {
+    "pages": [
+      {
+        "label": "Home",
+        "url": "/",
+        "redirect": "/index"
+      },
+      {
+        "label": "示例",
+        "children": [
+          {
+            "label": "用户管理",
+            "url": "index",
+            "schemaApi": "get:/pages/user.json"
+          }
+        ]
+      }
+    ]
+  }
+}

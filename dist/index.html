@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8"/>
-    <title>运维部署平台</title>
+    <title>k8s学习前端demo</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta
             name="viewport"
@@ -60,123 +60,19 @@
 
         const app = {
             type: 'app',
-            brandName: '运维部署平台',
+            brandName: 'Admin',
             logo: '/public/logo.png',
             header: {
-                "type": "page",
-                "initApi": "get:/dp-manager/system/user/profile/get",
-                "body": [
-                    {
-                        "type": "flex",
-                        "justify": "flex-end",
-                        "items": [
-                            {
-                                "type": "tpl",
-                                "tpl": "欢迎您，${username}"
-                            },
-                            // {
-                            //     "type": "avatar",
-                            //     "size": 34,
-                            //     // "src": "https://suda.cdn.bcebos.com/images/amis/ai-fake-face.jpg",
-                            //     "text": "${username}",
-                            //     "gap": 2
-                            //
-                            // },
-                            {
-                                "name": "system",
-                                "type": "dropdown-button",
-                                "level": "link",
-                                "rightIcon": "fa fa-ellipsis-v",
-                                "hideCaret": true,
-                                "trigger": "hover",
-                                "block": false,
-                                "align": "right",
-                                "buttons": [
-                                    {
-                                        "type": "button",
-                                        "label": "个人中心",
-                                        "disabled": true
-                                    },
-                                    {
-                                        "type": "button",
-                                        "label": "修改密码",
-                                        "actionType": "dialog",
-                                        "dialog": {
-                                            "title": "密码修改",
-                                            "size": "md",
-                                            "showErrorMsg": false,
-                                            "body": {
-                                                "type": "form",
-                                                "api": "put:/dp-manager/system/user/profile/update-password",
-                                                "messages": {
-                                                    "validateFailed": ""
-                                                },
-                                                "body": [
-                                                    {
-                                                        "type": "input-password",
-                                                        "name": "oldPassword",
-                                                        "label": "旧密码",
-                                                        "required": true
-                                                    },
-                                                    {
-                                                        "type": "input-password",
-                                                        "name": "firstNewPassword",
-                                                        "label": "新密码",
-                                                        "required": true,
-                                                        "validations": {
-                                                            "isRequired": true,
-                                                            "matchRegexp": '^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,10}$'
-                                                        },
-                                                        "validationErrors": {
-                                                            "isRequired": "这是必填项",
-                                                            "matchRegexp": "必须包含数字、字母，6-10位"
-                                                        }
-                                                    },
-                                                    {
-                                                        "type": "input-password",
-                                                        "name": "newPassword",
-                                                        "label": "确认密码",
-                                                        "required": true,
-                                                        "validations": {
-                                                            "isRequired": true,
-                                                            "equalsField":"firstNewPassword"
-                                                        },
-                                                        "validationErrors": {
-                                                            "isRequired": "这是必填项",
-                                                            "equalsField": "两次密码不相等"
-                                                        }
-                                                    }
-                                                ]
-                                            }
-                                        }
-                                    },
-                                    {
-                                        "type": "button",
-                                        "actionType": "ajax",
-                                        "label": "退出",
-                                        "api": {
-                                            "url": "/dp-manager/system/logout",
-                                            "adaptor": (api, payload) => {
-                                                window.location.href = "/login"
-                                                return api;
-                                            }
-                                        }
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                ]
-
+                type: 'tpl',
+                inline: false,
+                className: 'w-full',
+                tpl: '<div class="flex justify-between"><div>顶部区域左侧</div><div>顶部区域右侧</div></div>'
             },
             // footer: '<div class="p-2 text-center bg-light">底部区域</div>',
             // asideBefore: '<div class="p-2 text-center">菜单前面区域</div>',
             // asideAfter: '<div class="p-2 text-center">菜单后面区域</div>',
-            api: {
-                "url": "/dp-manager/system/list-menus"
-            }
+            api: '/pages/site.json'
         };
-
         function normalizeLink(to, location = history.location) {
             to = to || '';
 

@@ -1,0 +1,68 @@
+{
+  "type": "page",
+  "name": "userList",
+  "body": [
+    {
+      "type": "crud",
+      "name": "userList",
+      "api": {
+        "method": "get",
+        "url": "/backend/user/page",
+        "data": {
+          "current": "${page}",
+          "pageSize": "${perPage}",
+          "username": "${username}"
+        }
+      },
+      "filter": {
+        "title": "",
+        "mode": "inline",
+        "wrapWithPanel": false,
+        "submitText": "",
+        "controls": [
+          {
+            "type": "text",
+            "name": "username",
+            "placeholder": "用户账号",
+            "label": "用户账号",
+            "size": "sm",
+            "clearable": true
+          },
+          {
+            "type": "submit",
+            "label": "搜索",
+            "size": "md",
+            "className": "btn-primary"
+          }
+        ],
+        "className": "m-b-sm"
+      },
+      "columns": [
+        {
+          "name": "id",
+          "label": "用户编号",
+          "sortable": true
+        },
+        {
+          "name": "username",
+          "label": "用户账号",
+          "sortable": true
+        },
+        {
+          "name": "age",
+          "label": "年龄",
+          "sortable": true
+        }
+      ],
+      "affixHeader": true,
+      "columnsTogglable": "auto",
+      "placeholder": "暂无数据",
+      "tableClassName": "table-db table-striped",
+      "headerClassName": "crud-table-header",
+      "footerClassName": "crud-table-footer",
+      "toolbarClassName": "crud-table-toolbar",
+      "combineNum": 0,
+      "bodyClassName": "panel-default"
+    }
+  ]
+}

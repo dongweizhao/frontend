@@ -1,5 +1,5 @@
 #workflow名称
-name: Push Image
+name: ci
 # 触发条件
 on:
 #github页面手动触发
@@ -23,7 +23,7 @@ jobs:
     outputs:
       tags: ${{ steps.output-id.outputs.v }}
     steps:
-      # 拉取代码
+      # 拉取代码，同时获取tag，如果获取不到则默认值为edge，并赋值给v变量
       - uses: actions/checkout@v3
       - id: output-id
         run: |
@@ -59,8 +59,9 @@ jobs:
             linux/arm64
           #推送到镜像仓库  
           push: true
-          # 即最终打包成例如 dweizhao/backend:latest
-          # 和 dweizhao/backend:1.2.5
+          # 这里会构建两个版本镜像，
+          # 1.dweizhao/backend:latest
+          # 2.  output-id步骤中获取的v，构建dweizhao/backend:edge或者dweizhao/backend:对应tag值
           tags: |
             ${{ env.DOCKER_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.output-id.outputs.v }}
             ${{ env.DOCKER_REGISTRY }}/${{ env.IMAGE_NAME }}:latest

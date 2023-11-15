@@ -41,13 +41,7 @@ jobs:
         with:
         #这里引用的变量为上一步配置的变量
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
-          password: ${{ secrets.DOCKER_HUB_PWD }}
-      # 生成版本，例如 由发布 v1.2.5 触发，则分别为
-      # REPO_VERSION=1.2.5
-      - name: Get Meta
-        id: meta
-        run: |
-          echo REPO_VERSION=$(echo ${{ github.ref }} | awk -F"/" '{print $3}' | awk -F"v" '{print $2}') >> $GITHUB_OUTPUT          
+          password: ${{ secrets.DOCKER_HUB_PWD }}     
       # 打包构建并推送
       - name: Build and push
         uses: docker/build-push-action@v4
